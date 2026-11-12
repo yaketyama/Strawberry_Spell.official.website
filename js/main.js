@@ -60,8 +60,10 @@
           dialog.className = 'profileDialog staticDialog';
           const intro = profile.intro.split('\n').map((line) => line || '<br>').join('<br>');
           dialog.innerHTML = `<button class="staticDialogClose" type="button" aria-label="閉じる">×</button>
-            <div class="profilePhoto"><img src="${new URL(profile.image.replace(/^\//, ''), siteBase).href}" alt="${profile.name}"></div>
-            <div class="profileBody"><div class="profileHeader"><span class="profileRole">${profile.roleEn} / ${profile.role}</span><h2 class="profileName">${profile.name}</h2><p class="profileColor">IMAGE COLOR　${profile.color}</p></div><p class="profileIntro">${intro}</p><div class="profileMessage"><span>MESSAGE</span><p>${profile.message}</p></div></div>`;
+            <div class="staticDialogContent">
+              <div class="profilePhoto"><img src="${new URL(profile.image.replace(/^\//, ''), siteBase).href}" alt="${profile.name}"></div>
+              <div class="profileBody"><div class="profileHeader"><span class="profileRole">${profile.roleEn} / ${profile.role}</span><h2 class="profileName">${profile.name}</h2><p class="profileColor">IMAGE COLOR　${profile.color}</p></div><p class="profileIntro">${intro}</p><div class="profileMessage"><span>MESSAGE</span><p>${profile.message}</p></div></div>
+            </div>`;
           document.body.append(dialog);
           dialog.querySelector('.staticDialogClose').addEventListener('click', () => dialog.close());
           dialog.addEventListener('click', (event) => { if (event.target === dialog) dialog.close(); });
