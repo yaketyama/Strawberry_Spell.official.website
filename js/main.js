@@ -86,23 +86,31 @@
     });
   };
 
-  const navigateWithoutStoppingBgm = async (targetUrl, push = true) => {
+  const pageKeyFromUrl = (targetUrl) => {
+    const hashKey = targetUrl.hash.replace(/^#/, '');
+    if (['home', 'about', 'cast', 'join'].includes(hashKey)) return hashKey === 'home' ? '' : hashKey;
+    const relativePath = targetUrl.pathname.slice(siteBase.pathname.length).replace(/^\//, '').replace(/\/$/, '');
+    return ['', 'about', 'cast', 'join'].includes(relativePath) ? relativePath : null;
+  };
+
+  const navigateWithoutStoppingBgm = (targetUrl, push = true) => {
     try {
-      const response = await fetch(targetUrl.href);
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const nextDocument = new DOMParser().parseFromString(await response.text(), 'text/html');
-      const nextMain = nextDocument.querySelector('main');
+      const key = pageKeyFromUrl(targetUrl);
+      const page = key === null ? null : window.STRAWBERRY_PAGES?.[key];
+      if (!page) throw new Error('page data not found');
+      const nextMain = document.createElement('main');
+      nextMain.innerHTML = page.main;
       const currentMain = document.querySelector('main');
-      if (!nextMain || !currentMain) throw new Error('main element not found');
+      if (!currentMain) throw new Error('main element not found');
       prepareFragmentLinks(nextMain, targetUrl);
       currentMain.replaceWith(nextMain);
-      document.title = nextDocument.title;
+      document.title = page.title;
       if (push) history.pushState({}, '', targetUrl.href);
       setMenu(false);
       setupCast();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (error) {
-      window.location.href = targetUrl.href;
+      console.error('ページ切り替えに失敗しました', error);
     }
   };
 
@@ -111,11 +119,17 @@
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || link.target === '_blank') return;
     const targetUrl = new URL(link.href, window.location.href);
     if (targetUrl.origin !== window.location.origin) return;
-    const relativePath = targetUrl.pathname.slice(siteBase.pathname.length).replace(/^\//, '');
-    if (!['', 'about/', 'cast/', 'join/'].includes(relativePath)) return;
+    const pageKey = pageKeyFromUrl(targetUrl);
+    if (pageKey === null) return;
     event.preventDefault();
-    navigateWithoutStoppingBgm(targetUrl);
+    const hashUrl = new URL(siteBase.href);
+    hashUrl.hash = pageKey || 'home';
+    navigateWithoutStoppingBgm(hashUrl);
   });
 
   window.addEventListener('popstate', () => navigateWithoutStoppingBgm(new URL(window.location.href), false));
+
+  if (window.location.hash) {
+    navigateWithoutStoppingBgm(new URL(window.location.href), false);
+  }
 })();
