@@ -8,8 +8,8 @@
 .mobileMenuOpen{overflow:hidden}
 .staticVolume{accent-color:#e94e83;width:92px}
 .staticVolumeLabel{min-width:34px;font-size:.78rem;color:#a83062}
-.staticDialog{max-width:min(920px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:0;border:0;border-radius:28px;overflow:auto;background:#fffafc;color:#5b3443;box-shadow:0 24px 80px #6d284d55}
+.staticDialog{position:relative;max-width:min(920px,calc(100vw - 32px));max-height:calc(100vh - 32px);padding:0;border:0;border-radius:28px;overflow:auto;background:#fffafc;color:#5b3443;box-shadow:0 24px 80px #6d284d55}
 .staticDialog::backdrop{background:#5b294b99;backdrop-filter:blur(5px)}
-.staticDialogClose{position:sticky;z-index:3;float:right;top:14px;margin:14px 14px -58px 0;width:42px;height:42px;border:1px solid #f2a8c0;border-radius:50%;background:#fff;color:#c83c70;font-size:28px;line-height:1;cursor:pointer}
+.staticDialogClose{position:absolute;z-index:3;top:14px;right:14px;margin:0;width:42px;height:42px;border:1px solid #f2a8c0;border-radius:50%;background:#fff;color:#c83c70;font-size:28px;line-height:1;cursor:pointer}
 .staticDialog .profileIntro{white-space:normal}
 @media(max-width:700px){.staticDialog{border-radius:22px}.staticDialog .profilePhoto img{max-height:42vh;object-fit:contain}.staticDialog .profileBody{padding:22px}.staticDialog .profileName{font-size:2rem}}
