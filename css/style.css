@@ -8,7 +8,7 @@
 .mobileMenuOpen{overflow:hidden}
 .staticVolume{accent-color:#e94e83;width:92px}
 .staticVolumeLabel{min-width:34px;font-size:.78rem;color:#a83062}
-.staticDialog{display:block!important;position:relative;width:min(880px,calc(100vw - 32px))!important;max-width:min(880px,calc(100vw - 32px))!important;max-height:calc(100vh - 32px);padding:0;border:0;border-radius:28px;overflow:auto;background:#fffafc;color:#5b3443;box-shadow:0 24px 80px #6d284d55}
+.staticDialog{display:block!important;position:fixed!important;inset:0!important;margin:auto!important;width:min(880px,calc(100vw - 32px))!important;max-width:min(880px,calc(100vw - 32px))!important;height:max-content!important;max-height:calc(100vh - 32px);padding:0;border:0;border-radius:28px;overflow:auto;background:#fffafc;color:#5b3443;box-shadow:0 24px 80px #6d284d55}
 .staticDialogContent{display:grid;grid-template-columns:minmax(240px,42%) minmax(0,1fr);min-height:570px}
 .staticDialogContent .profilePhoto{min-height:570px}
 .staticDialogContent .profileBody{min-width:0}
